@@ -1,0 +1,16 @@
+{
+    "name": "stahiralijan/request-caster",
+    "description": "This package intercepts Laravel Form Submits after successful validation and provides useful function and also casts the submitted form data accordingly e.g. Upper-case first Characters of Words, Capitalized them, and checkbox value \"1\" to boolean, JSON string to PHP Array conversions etc.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Syed Tahir Ali Jan",
+            "email": "stahiralijan@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^7.0"
+    }
+
+}

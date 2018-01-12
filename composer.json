@@ -5,12 +5,18 @@
     "authors": [
         {
             "name": "Syed Tahir Ali Jan",
-            "email": "stahiralijan@gmail.com"
+            "email": "stahiralijan@gmail.com",
+            "homepage": "http://tahirjan.com"
         }
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": "^7.0"
+        "php": ">=7.0",
+        "illuminate/support": "~5.1"
+    },
+    "require-dev": {
+        "php": ">=7.0",
+        "illuminate/support": "~5.1"
     }
 
 }

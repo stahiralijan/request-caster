@@ -1,11 +1,14 @@
 ## Laravel RequestCaster
+
 *Requirements: I've only tested this package with Laravel 5.5, please help me by testing this package in older versions of Laravel*
-###Installation
+
+### Installation
+
 Install this package by typing the following command:
 ```shell
 composer require stahiralijan/request-caster
 ```
-###Usage
+### Usage
 Let's learn from an example:
 
 You want to be able to save the submitted data but you don't want to make a mess in the controller method like this:
@@ -32,7 +35,7 @@ public function store(UserFormRequest $request)
 As you can see after a while you start to wondering what if there is a way you could automate this process so that 
 your controller would look elegant and clean. With this package you can just do that:
 
-###Step 1:
+### Step 1:
 Use the `RequestCaster` Trait in your form request (in this case `UserFormRequest`):
 ```php
 ...
@@ -45,7 +48,7 @@ class UserFormRequest extends FormRequest
 }
 ```
 
-###Step 2:
+### Step 2:
 Define the Request attributes that are required to be casted:
 ```php
 class UserFormRequest extends FormRequest
@@ -59,7 +62,7 @@ class UserFormRequest extends FormRequest
     ...
 }
 ```
-###Finally
+### Finally
 ...and that's all you needed to do, `first_name` and `last_name` are automatically capitalized. Also, you don't need to worry about your form data being getting dirty before validation because these castings will run after the validator validates the form data. 
 ```php
 public function store(UserFormRequest $request)
@@ -72,7 +75,7 @@ public function store(UserFormRequest $request)
             ->with('message'=>"User ({$request->full_name}) created!");
 }
 ```
-###Available transformations / Casts
+### Available transformations / Casts
 The following casts are available: 
  - `$toLowerCaseWords`: Applies `strtolower()` to the selected field(s).
  - `$toUpperCaseWords`: Applies `strtoupper()` to the selected field(s).
@@ -83,7 +86,7 @@ The following casts are available:
  - `$toBooleans`: Casts selected field(s) to `bool`.
  - `$toArrayFromJson`: Applies `json_decode()` to the selected fields.
 
-###Available methods
+### Available methods
 For now only `collection` method is available
 
 You can use this method to get a collection (`Illuminate\Support\Collection`) of all the attributes

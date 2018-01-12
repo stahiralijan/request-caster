@@ -18,6 +18,11 @@
         "php": ">=7.0",
         "illuminate/support": "~5.1"
     },
+    "autoload": {
+         "psr-4": {
+                "Stahiralijan\\RequestCaster\\": "src"
+        }
+    },
     "minimum-stability": "dev",
     "prefer-stable": true
 }

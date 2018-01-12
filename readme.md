@@ -85,9 +85,10 @@ The following casts are available:
  - `$toFloats`: Casts selected field(s) to `float`.
  - `$toBooleans`: Casts selected field(s) to `bool`.
  - `$toArrayFromJson`: Applies `json_decode()` to the selected fields.
+ - `$joinStrings`: Joins two or more fields and sets the result in new field specified in the array key, syntax: `$joinStrings = ['newField' => 'glue|field1,field2,...,fieldn']`
 
 ### Available methods
-For now only `collection` method is available
+For now only `collection(array $keys)` method is available
 
 You can use this method to get a collection (`Illuminate\Support\Collection`) of all the attributes
 

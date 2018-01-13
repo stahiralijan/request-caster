@@ -1,5 +1,12 @@
 ## Laravel RequestCaster
 
+[![Latest Stable Version](https://poser.pugx.org/stahiralijan/request-caster/version)](https://packagist.org/packages/stahiralijan/request-caster)
+[![Total Downloads](https://poser.pugx.org/stahiralijan/request-caster/downloads)](https://packagist.org/packages/stahiralijan/request-caster)
+[![Latest Unstable Version](https://poser.pugx.org/stahiralijan/request-caster/v/unstable)](//packagist.org/packages/stahiralijan/request-caster)
+[![License](https://poser.pugx.org/stahiralijan/request-caster/license)](https://packagist.org/packages/stahiralijan/request-caster)
+[![Monthly Downloads](https://poser.pugx.org/stahiralijan/request-caster/d/monthly)](https://packagist.org/packages/stahiralijan/request-caster)
+[![Daily Downloads](https://poser.pugx.org/stahiralijan/request-caster/d/daily)](https://packagist.org/packages/stahiralijan/request-caster)
+
 *Requirements: I've only tested this package with Laravel 5.5, please help me by testing this package in older versions of Laravel*
 
 ### Installation

@@ -53,7 +53,7 @@
             $this->makeNewFields();
         }
         
-        protected function makeNewFields() : void
+       protected function makeNewFields() : void
         {
             if (property_exists($this, 'newFields') && $this->newFields)
             {
@@ -61,11 +61,13 @@
                 {
                     $submittedFieldAndMethod = explode('|', $value);
                     $field = $submittedFieldAndMethod[0];
+                    $newValue = request($field);
                     $methods = array_map('trim', explode(',',$submittedFieldAndMethod[1]));
                     foreach($methods as $method)
                     {
-                        $this->request->set($newFieldName, $method(request($field)));
+                        $newValue = $method($newValue);
                     }
+                    $this->request->set($newFieldName, $newValue);
                 }
             }
         }

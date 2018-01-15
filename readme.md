@@ -93,6 +93,7 @@ The following casts are available:
  - `$toBooleans`: Casts selected field(s) to `bool`.
  - `$toArrayFromJson`: Applies `json_decode()` to the selected fields.
  - `$joinStrings`: Joins two or more fields and sets the result in new field specified in the array key, syntax: `$joinStrings = ['newField' => 'glue|field1,field2,...,fieldn']`
+ - `$newFields`: Creates a new field in `FormRequest` in the following format: `$newFields = ['name' => 'newFieldName|function1,function2,...,functionN'];` The functions to be applied must be globally accessible like: str_slug, trim, count etc
 
 ### Available methods
 For now only `collection(array $keys)` method is available
@@ -124,6 +125,9 @@ $toUCFirstWords = ['display_name'];
 $toSlugs = ['product_name'];
 ``` 
 You got the idea about the usage of the simple stuff, now one special transformation / caster
+
+### $joinStrings:
+
 ```php
 $joinStrings = ['fullname'=>' |first_name,last_name'];
 ```
@@ -133,3 +137,14 @@ $joinStrings = ['fullname'=>' |first_name,last_name'];
  - Next you add the attributes that needs to be glued.
 
 If `first_name` is `Tahir` and `last_name` is `Jan` the output will be `Tahir Jan` according to the above rule, and can be accessed with `$request->fullname` or `$request->get('fullname')`
+
+### $newFields
+This is used to create a new field in the `FormRequest`, for example:
+
+#### Note: function order is important!
+
+```
+protected $newFields = ['name_slug' => 'display_name|trim,str_slug,strtoupper'];
+// This will generate ['name_slug' => "SYED-TAHIR-ALI-JAN"] for 'display_name'=>'syed tahir ali jan'
+//   as you might have guessed, str_slug() was called first, then strtoupper() was called
+```

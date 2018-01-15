@@ -61,6 +61,10 @@
                 {
                     $submittedFieldAndMethod = explode('|', $value);
                     $field = $submittedFieldAndMethod[0];
+                    if(count($submittedFieldAndMethod) < 2)
+                    {
+                        $this->request->set($newFieldName, request($field));
+                    }
                     $newValue = request($field);
                     $methods = array_map('trim', explode(',',$submittedFieldAndMethod[1]));
                     foreach($methods as $method)

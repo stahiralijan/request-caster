@@ -4,19 +4,6 @@
 
     use Illuminate\Support\Collection;
 
-    /**
-     * Trait RequestCasterTrait
-     *
-     * @property array $toLowerCaseWords
-     * @property array $toUpperCaseWords
-     * @property array $toUCFirstWords
-     * @property array $toSlugs
-     * @property array $toIntegers
-     * @property array $toFloats
-     * @property array $toBooleans
-     * @property array $toArrayFromJson
-     * @package App\Http\Requests\Traits
-     */
     trait RequestCasterTrait
     {
         /**
@@ -63,6 +50,24 @@
             // run this in last so if there are fields that need to be run first should run first
             // i.e. names should be capitalized before joined together
             $this->castJoinFields();
+            $this->makeNewFields();
+        }
+        
+        protected function makeNewFields() : void
+        {
+            if (property_exists($this, 'newFields') && $this->newFields)
+            {
+                foreach ($this->newFields as $newFieldName => $value)
+                {
+                    $submittedFieldAndMethod = explode('|', $value);
+                    $field = $submittedFieldAndMethod[0];
+                    $methods = array_map('trim', explode(',',$submittedFieldAndMethod[1]));
+                    foreach($methods as $method)
+                    {
+                        $this->request->set($newFieldName, $method(request($field)));
+                    }
+                }
+            }
         }
 
         protected function castJoinFields(): void

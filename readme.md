@@ -9,6 +9,12 @@
 
 *Requirements: I've only tested this package with Laravel 5.5, please help me by testing this package in older versions of Laravel*
 
+### Article about usage
+
+A detailed article about the usage of this package is discussed here:
+
+https://medium.com/@stahiralijan/laravel-formrequest-attribute-casting-db2fcb794db9
+
 ### Installation
 
 Install this package by typing the following command:

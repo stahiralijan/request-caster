@@ -4,6 +4,19 @@
 
     use Illuminate\Support\Collection;
 
+    /**
+     * Trait RequestCasterTrait
+     *
+     * @property array $toLowerCaseWords
+     * @property array $toUpperCaseWords
+     * @property array $toUCFirstWords
+     * @property array $toSlugs
+     * @property array $toIntegers
+     * @property array $toFloats
+     * @property array $toBooleans
+     * @property array $toArrayFromJson
+     * @package App\Http\Requests\Traits
+     */
     trait RequestCasterTrait
     {
         /**
@@ -11,11 +24,37 @@
          *
          * @return \Illuminate\Support\Collection
          */
-        public function collection(array $keys = NULL)
+        public function collection(array $keys = NULL): Collection
         {
             return Collection::make($this->all($keys));
         }
 
+        /**
+         * Dump and die all the submitted fields
+         *
+         * @return void
+         */
+        public function dd(): void
+        {
+            Collection::make($this->all())->dd();
+        }
+
+        /**
+         * Dumps all the submitted fields
+         *
+         * @reutrn void
+         */
+        public function dump(): void
+        {
+            Collection::make($this->all())->dump();
+        }
+
+        /**
+         * (Overridden)
+         * Validate the class instance.
+         *
+         * @return void
+         */
         public function validate()
         {
             $this->prepareForValidation();
@@ -36,6 +75,10 @@
             }
         }
 
+        /**
+         * Called by validate() method, it maps all the methods used to perform the operations
+         * @return void
+         */
         public function mapCasts(): void
         {
             $this->castToLowerCaseWords();
@@ -50,32 +93,12 @@
             // run this in last so if there are fields that need to be run first should run first
             // i.e. names should be capitalized before joined together
             $this->castJoinFields();
-            $this->makeNewFields();
-        }
-        
-       protected function makeNewFields() : void
-        {
-            if (property_exists($this, 'newFields') && $this->newFields)
-            {
-                foreach ($this->newFields as $newFieldName => $value)
-                {
-                    $submittedFieldAndMethod = explode('|', $value);
-                    $field = $submittedFieldAndMethod[0];
-                    if(count($submittedFieldAndMethod) < 2)
-                    {
-                        $this->request->set($newFieldName, request($field));
-                    }
-                    $newValue = request($field);
-                    $methods = array_map('trim', explode(',',$submittedFieldAndMethod[1]));
-                    foreach($methods as $method)
-                    {
-                        $newValue = $method($newValue);
-                    }
-                    $this->request->set($newFieldName, $newValue);
-                }
-            }
         }
 
+        /**
+         * Joins the fields of the request
+         * @return void
+         */
         protected function castJoinFields(): void
         {
             if (property_exists($this, 'joinStrings') && $this->joinStrings)
@@ -94,6 +117,10 @@
             }
         }
 
+        /**
+         * Converts the request field into a lower-case string using standard PHP function strtolower()
+         * @return void
+         */
         protected function castToLowerCaseWords(): void
         {
             if (property_exists($this, 'toLowerCaseWords') && $this->toLowerCaseWords)
@@ -108,6 +135,10 @@
             }
         }
 
+        /**
+         * Converts the request field to an upper-case string using standard PHP function strtoupper()
+         * @return void
+         */
         protected function castToUpperCaseWords(): void
         {
             if (property_exists($this, 'toUpperCaseWords') && $this->toUpperCaseWords)
@@ -122,6 +153,10 @@
             }
         }
 
+        /**
+         * Capitalizes the first word for the request field using standard PHP function ucwords()
+         * @return void
+         */
         protected function castUCFirstWords(): void
         {
             if (property_exists($this, 'toUCFirstWords') && $this->toUCFirstWords)
@@ -136,6 +171,10 @@
             }
         }
 
+        /**
+         * Slugify the request field using laravel helper function str_slug()
+         * @return void
+         */
         protected function castToSlugs(): void
         {
             if (property_exists($this, 'toSlugs') && $this->toSlugs)
@@ -150,7 +189,11 @@
             }
         }
 
-        protected function castToInteger()
+        /**
+         * Converts the request field into an integer using simple casting (int)
+         * @return void
+         */
+        protected function castToInteger(): void
         {
             if (property_exists($this, 'toIntegers') && $this->toIntegers)
             {
@@ -164,6 +207,10 @@
             }
         }
 
+        /**
+         * Converts the request field into floating-point value using simple casting (float)
+         * @return void
+         */
         protected function castToFloats(): void
         {
             if (property_exists($this, 'toFloats') && $this->toFloats)
@@ -178,6 +225,10 @@
             }
         }
 
+        /**
+         * Converts the request field into boolean using simple casting (bool)
+         * @return void
+         */
         protected function castToBoolean(): void
         {
             if (property_exists($this, 'toBooleans') && $this->toBooleans)
@@ -192,6 +243,10 @@
             }
         }
 
+        /**
+         * Converts JSON to an associated array using jscon_decode
+         * @return void
+         */
         protected function castJsonToArray(): void
         {
             if (property_exists($this, 'toArrayFromJson') && $this->toArrayFromJson)
